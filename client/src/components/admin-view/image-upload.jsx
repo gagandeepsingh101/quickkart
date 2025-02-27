@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { Skeleton } from "../ui/skeleton";
+import { toast } from "../ui/use-toast";
 
 function ProductImageUpload({
   imageFile,
@@ -48,6 +49,11 @@ function ProductImageUpload({
   async function uploadImageToCloudinary() {
     setImageLoadingState(true);
     const data = new FormData();
+    if (imageFile === null || imageFile === "") {
+      toast("Please select an image to upload", "error");
+      setImageLoadingState(false);
+      return;
+    };
     data.append("my_file", imageFile);
     const response = await axios.post(
       import.meta.env.VITE_BACKEND_URL + "admin/products/upload-image",
@@ -73,9 +79,8 @@ function ProductImageUpload({
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className={`${
-          isEditMode ? "opacity-60" : ""
-        } border-2 border-dashed rounded-lg p-4`}
+        className={`${isEditMode ? "opacity-60" : ""
+          } border-2 border-dashed rounded-lg p-4`}
       >
         <Input
           id="image-upload"
@@ -88,9 +93,8 @@ function ProductImageUpload({
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
-            className={`${
-              isEditMode ? "cursor-not-allowed" : ""
-            } flex flex-col items-center justify-center h-32 cursor-pointer`}
+            className={`${isEditMode ? "cursor-not-allowed" : ""
+              } flex flex-col items-center justify-center h-32 cursor-pointer`}
           >
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
             <span>Drag & drop or click to upload image</span>
