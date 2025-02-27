@@ -27,6 +27,13 @@ function AdminOrderDetailsView({ orderDetails }) {
   function handleUpdateStatus(event) {
     event.preventDefault();
     const { status } = formData;
+    if (!status) {
+      toast({
+        title: "Please select a status",
+        variant: "error",
+      });
+      return;
+    }
 
     dispatch(
       updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
@@ -43,7 +50,7 @@ function AdminOrderDetailsView({ orderDetails }) {
   }
 
   return (
-    <DialogContent className="sm:max-w-[600px]">
+    <DialogContent className="sm:max-w-[600px] bg-white">
       <div className="grid gap-6">
         <div className="grid gap-2">
           <div className="flex mt-6 items-center justify-between">
@@ -70,13 +77,12 @@ function AdminOrderDetailsView({ orderDetails }) {
             <p className="font-medium">Order Status</p>
             <Label>
               <Badge
-                className={`py-1 px-3 ${
-                  orderDetails?.orderStatus === "confirmed"
+                className={`py-1 px-3 ${orderDetails?.orderStatus === "confirmed"
                     ? "bg-green-500"
                     : orderDetails?.orderStatus === "rejected"
-                    ? "bg-red-600"
-                    : "bg-black"
-                }`}
+                      ? "bg-red-600"
+                      : "bg-black"
+                  }`}
               >
                 {orderDetails?.orderStatus}
               </Badge>
@@ -90,12 +96,12 @@ function AdminOrderDetailsView({ orderDetails }) {
             <ul className="grid gap-3">
               {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
                 ? orderDetails?.cartItems.map((item) => (
-                    <li className="flex items-center justify-between">
-                      <span>Title: {item.title}</span>
-                      <span>Quantity: {item.quantity}</span>
-                      <span>Price: ${item.price}</span>
-                    </li>
-                  ))
+                  <li className="flex items-center justify-between">
+                    <span>Title: {item.title}</span>
+                    <span>Quantity: {item.quantity}</span>
+                    <span>Price: ${item.price}</span>
+                  </li>
+                ))
                 : null}
             </ul>
           </div>
