@@ -262,3 +262,14 @@ To access the **Admin Panel**, use the following credentials:
 - **Email**: admin123@gmail.com
 - **Password**: admin1234
 
+---
+
+## 💳 PayPal Sandbox (Local Payments Only)
+
+⚠️ **PayPal payments work only on localhost (not in live deployment).**  
+Use the following **PayPal sandbox account** to test payments:
+
+- **Email**: `sb-12e9238108408@personal.example.com`  
+- **Password**: `Ta/XJSk5`
+
+
